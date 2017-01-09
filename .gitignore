@@ -69,3 +69,6 @@ $RECYCLE.BIN/
 # Sass
 .sass-cache/
 *.css.map
+
+# Typescript
+*.js.map
