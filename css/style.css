@@ -1,8 +1,9 @@
 .top-bar {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.26); }
 
-.top-bar, .menu-text {
+.top-bar, .menu-text, .top-bar ul {
   background-color: #00897B;
-  color: #FAFAFA; }
+  color: #FAFAFA;
+  font-weight: 400; }
 
 /*# sourceMappingURL=style.css.map */
