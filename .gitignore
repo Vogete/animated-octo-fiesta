@@ -65,3 +65,7 @@ $RECYCLE.BIN/
 
 # Temporary files
 *.bak
+
+# Sass
+.sass-cache/
+*.css.map
