@@ -1,0 +1,14 @@
+$menu-color: #00897B;
+$primary-color: #009688;
+$dark-font-color: #FAFAFA;
+$light-font-color: #000000;
+
+.top-bar{
+    box-shadow: 0 2px 5px rgba(0,0,0,.26);
+}
+
+.top-bar, .menu-text{
+    background-color: $menu-color;
+    color: $dark-font-color;
+    
+}
