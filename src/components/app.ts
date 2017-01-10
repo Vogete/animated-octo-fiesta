@@ -58,3 +58,4 @@ class Translation {
 let translation1 = new Translation("Hello", "English");
 
 let MyWord = new Word("Sziaaaaaa", [translation1]);
+console.log(MyWord);

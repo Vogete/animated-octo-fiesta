@@ -17,8 +17,8 @@ module.exports = {
             globalPath.src + "libs/foundation/vendor/foundation.min.js",
             globalPath.src + "libs/foundation/app.js"
         ],
-        fonts: [
-            globalPath.src + "libs/font-awesome/fonts/"
+        copy_fonts: [
+            globalPath.src + "libs/font-awesome/fonts/**/*"
         ]
     },  
 
@@ -40,6 +40,7 @@ module.exports = {
         root: globalPath.dist,
         js: globalPath.dist + "js/",
         css: globalPath.dist + "css/",
-        assets: globalPath.dist + "assets/"
+        assets: globalPath.dist + "assets/",
+        fonts: globalPath.dist + "fonts/"
     }
 };

@@ -7,6 +7,8 @@ require('./gulp_tasks/gulp.libs.js.concat')(gulp);
 
 // Concat css
 require('./gulp_tasks/gulp.libs.css.concat')(gulp);
+require('./gulp_tasks/gulp.browserify')(gulp);
+
 
 // Compile and concat sass
 require('./gulp_tasks/gulp.sass')(gulp);
@@ -23,11 +25,11 @@ require('./gulp_tasks/gulp.clear')(gulp);
 
 
 gulp.task("build", function() {
-    runSequence("clear", "copy_index", "copy_assets", "libs.css.concat", "libs.js.concat", "sass", "ts");
+    runSequence("clear", "copy_index", "copy_assets", "libs.css.concat", "libs.js.concat", "sass", "browserify");
 });
 
-gulp.task('watch', function () {
-    runSequence('build', 'watch-files');
+gulp.task('watch', function() {
+    runSequence('build', 'watch-files');    
 });
 
 gulp.task('watch-files', function(){
@@ -35,5 +37,6 @@ gulp.task('watch-files', function(){
     gulp.watch(config.src.sass, ['sass']);
     gulp.watch(config.src.importedComponents, ['copy_assets']);
     gulp.watch(config.libs.js, ['libs.js.concat']);   
-    gulp.watch(config.src.ts, ["ts"]);
+    // gulp.watch(config.src.ts, ["ts"]);     
+    gulp.watch(config.src.ts, ['browserify']);
 });
