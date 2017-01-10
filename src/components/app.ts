@@ -57,4 +57,4 @@ class Translation {
 
 let translation1 = new Translation("Hello", "English");
 
-let MyWord = new Word("Szia", [translation1]);
+let MyWord = new Word("Sziaaaaaa", [translation1]);

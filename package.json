@@ -1,0 +1,26 @@
+{
+  "name": "animated-octo-fiesta",
+  "version": "1.0.0",
+  "description": "Project Animated OctoFiesta",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Vogete/animated-octo-fiesta.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Vogete/animated-octo-fiesta/issues"
+  },
+  "homepage": "https://github.com/Vogete/animated-octo-fiesta#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-sass": "^3.1.0",
+    "gulp-typescript": "^3.1.4",
+    "typescript": "^2.1.4"
+  }
+}

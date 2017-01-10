@@ -72,3 +72,6 @@ $RECYCLE.BIN/
 
 # Typescript
 *.js.map
+
+# distribution Folder
+dist/
