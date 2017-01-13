@@ -28,6 +28,8 @@ module.exports = {
         importedComponents: globalPath.src + "components/other/",        
         ts: [
             //TS files to compile
+            globalPath.src + "components/models.ts",
+            
             globalPath.src + "components/app.ts"
         ],
 
