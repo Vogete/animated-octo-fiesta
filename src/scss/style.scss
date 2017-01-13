@@ -4,11 +4,20 @@ $dark-font-color: #FAFAFA;
 $light-font-color: #000000;
 
 .top-bar{
-    box-shadow: 0 2px 5px rgba(0,0,0,.26);
+    box-shadow: 0 2px 5px rgba(0,0,0,.26);    
+    font-size: 1.2em;
 }
 
 .top-bar, .menu-text, .top-bar ul{
     background-color: $menu-color;
     color: $dark-font-color;
     font-weight: 400;
+}
+
+h1{    
+    text-align: center;
+}
+
+.button.success{
+    color: $dark-font-color;
 }
