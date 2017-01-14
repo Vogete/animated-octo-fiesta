@@ -32,5 +32,8 @@
     "tsify": "^3.0.0",
     "typescript": "^2.1.4",
     "vinyl-source-stream": "^1.1.0"
+  },
+  "browser": {
+    "vue": "vue/dist/vue.common" // Vue standalone build
   }
 }

@@ -110,6 +110,12 @@ function deleteWord(_word:Word) {
 
 }
 
+var app = new Vue({
+    el: "#hellobello",
+    data: {
+        message: "kukucs"
+    }
+});
 
 document.getElementById("btn-addWord").addEventListener("click", addNewWordFromInput, false);
 
