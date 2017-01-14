@@ -16,7 +16,9 @@
     "url": "https://github.com/Vogete/animated-octo-fiesta/issues"
   },
   "homepage": "https://github.com/Vogete/animated-octo-fiesta#readme",
-  "dependencies": {},
+  "dependencies": {
+    "vue": "^2.1.8"
+  },
   "devDependencies": {
     "brfs": "^1.4.3",
     "browserify": "^13.3.0",
@@ -29,6 +31,6 @@
     "gulp-typescript": "^3.1.4",
     "tsify": "^3.0.0",
     "typescript": "^2.1.4",
-    "vinyl-source-stream": "^1.1.0"    
+    "vinyl-source-stream": "^1.1.0"
   }
 }

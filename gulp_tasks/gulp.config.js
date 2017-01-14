@@ -12,11 +12,19 @@ module.exports = {
         ],
         js: [
             // Order matters
+            globalPath.npm+"vue/dist/vue.js",
+
             globalPath.src + "libs/jquery.min.js",
             globalPath.src + "libs/what-input.min.js",
             globalPath.src + "libs/foundation/vendor/foundation.min.js",
             globalPath.src + "libs/foundation/app.js"
         ],
+        
+        // Typescript definition types
+        types: [
+            globalPath.npm+"/vue/types/index.d.ts"
+        ],
+
         copy_fonts: [
             globalPath.src + "libs/font-awesome/fonts/**/*"
         ]
@@ -27,7 +35,7 @@ module.exports = {
         indexPage: globalPath.src + "index.html",
         importedComponents: globalPath.src + "components/other/",        
         ts: [
-            //TS files to compile
+            //TS files to compile, order matters
             globalPath.src + "components/utilities.ts",
             globalPath.src + "components/models.ts",
 

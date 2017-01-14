@@ -1,5 +1,6 @@
 import {Word} from "./models";
 import {Translation} from "./models";
+import Vue = require('vue');
 
 let WordList : Word[] = [];
 let wordSeparator : string = "  ";
@@ -58,14 +59,9 @@ function writeWordsInTable(words: Word[]) {
     for (var i = 0; i < words.length; i++) {
         addWordToTable(words[i]);        
     }
-
-    // for (var i = 0; i < words.length; i++) {
-    //      appendHTML += `<tr id='${words[i].id}'><td>${words[i].Word}</td><td>${words[i].Translations[0].Word}</td></tr>`;
-    // }
-    // tblWordlist.innerHTML = appendHTML;
 }
 
-function createWord(word:string, meanings:string[]) : Word {    
+function createWord(word:string, meanings:string[]) : Word {
     let _translations : Translation[] = [];
 
     for (var i = 0; i < meanings.length; i++) {
@@ -83,23 +79,38 @@ function addNewWordFromInput() {
     let _word = _inputWord.value;
     let _translation = _inputTranslation.value;
 
-    let _newWord = createWord(_word, [_translation]);    
-    WordList.push(_newWord);
+    if (_word.length>0) {
+        let _newWord = createWord(_word, [_translation]);    
+        WordList.push(_newWord);
 
-    addWordToTable(_newWord);
-    console.log(WordList);
-    _inputWord.value = "";
-    _inputTranslation.value="";
+        addWordToTable(_newWord);
+        console.log(WordList);
+        _inputWord.value = "";
+        _inputTranslation.value="";        
+    }
 
 }
 
 function addWordToTable(_word : Word) {
     let tblWordlist =  <HTMLTableSectionElement>document.getElementById("tbl-wordList").getElementsByTagName("tbody")[0];
     
-    let appendHTML = `<tr id='${_word.id}'><td>${_word.Word}</td><td>${_word.Translations[0].Word}</td><td><button id="btn-addWord" class="small button alert">Delete</button></td></tr>`;
+    let appendHTML = `<tr id='${_word.id}'><td>${_word.Word}</td><td>${_word.Translations[0].Word}</td><td><button class="small button alert btn-deleteWord">Delete</button></td></tr>`;
     
     tblWordlist.insertAdjacentHTML("beforeend", appendHTML);
 
 }
 
+function deleteWord(_word:Word) {
+    for (var i = 0; i < WordList.length; i++) {
+        if (_word.id === WordList[i].id) {
+            WordList.splice(i, 1);
+            document.getElementById(_word.id).remove();
+        }        
+    }
+
+}
+
+
 document.getElementById("btn-addWord").addEventListener("click", addNewWordFromInput, false);
+
+
