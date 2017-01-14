@@ -54,11 +54,15 @@ function writeWordsInTable(words: Word[]) {
     console.log(words);
     let appendHTML : string = "";
     let tblWordlist =  <HTMLTableSectionElement>document.getElementById("tbl-wordList").getElementsByTagName("tbody")[0];
+
     for (var i = 0; i < words.length; i++) {
-         appendHTML += `<tr><td>${words[i].Word}</td><td>${words[i].Translations[0].Word}</td></tr>`;
-                
+        addWordToTable(words[i]);        
     }
-    tblWordlist.innerHTML = appendHTML;
+
+    // for (var i = 0; i < words.length; i++) {
+    //      appendHTML += `<tr id='${words[i].id}'><td>${words[i].Word}</td><td>${words[i].Translations[0].Word}</td></tr>`;
+    // }
+    // tblWordlist.innerHTML = appendHTML;
 }
 
 function createWord(word:string, meanings:string[]) : Word {    
@@ -72,3 +76,30 @@ function createWord(word:string, meanings:string[]) : Word {
 
     return _newWord;
 }
+
+function addNewWordFromInput() {
+    let _inputWord = (<HTMLInputElement>document.getElementById("txt-newWord"));
+    let _inputTranslation = (<HTMLInputElement>document.getElementById("txt-newTranslation"));
+    let _word = _inputWord.value;
+    let _translation = _inputTranslation.value;
+
+    let _newWord = createWord(_word, [_translation]);    
+    WordList.push(_newWord);
+
+    addWordToTable(_newWord);
+    console.log(WordList);
+    _inputWord.value = "";
+    _inputTranslation.value="";
+
+}
+
+function addWordToTable(_word : Word) {
+    let tblWordlist =  <HTMLTableSectionElement>document.getElementById("tbl-wordList").getElementsByTagName("tbody")[0];
+    
+    let appendHTML = `<tr id='${_word.id}'><td>${_word.Word}</td><td>${_word.Translations[0].Word}</td><td><button id="btn-addWord" class="small button alert">Delete</button></td></tr>`;
+    
+    tblWordlist.insertAdjacentHTML("beforeend", appendHTML);
+
+}
+
+document.getElementById("btn-addWord").addEventListener("click", addNewWordFromInput, false);

@@ -1,3 +1,14 @@
+function UUID() : string {
+    var d = new Date().getTime();
+    var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        var r = (d + Math.random()*16)%16 | 0;
+        d = Math.floor(d/16);
+        return (c=='x' ? r : (r&0x3|0x8)).toString(16);
+    });
+    return uuid;
+};
+
+
 /**
  * This is a class for the indiviual words.
  */
@@ -27,11 +38,18 @@ class Word {
     //     this._wordLanguage = v;
     // }
 
+
+    private _id : string;
+    public get id() : string {
+        return this._id;
+    }
+
     public Word: string;
     public Translations : Translation[];
     public WordLanguage : string;
 
     constructor(word: string, translations?: Translation[]) {
+        this._id = UUID();
         this.Word = word;
         this.Translations = translations;
     }
@@ -59,7 +77,7 @@ class Translation {
     // public set language(v : string) {
     //     this._translationLanguage = v;
     // }
-
+   
     public Word : string;
     public TranslationLanguage : string;    
 
