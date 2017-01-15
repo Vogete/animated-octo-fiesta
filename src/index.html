@@ -54,10 +54,10 @@
 
                 </thead>
                 <tbody>
-                    <tr v-for="word in words">
+                    <tr v-for="word in words" :key="word.id">
                         <td>{{ word.Word }}</td>
                         <td>{{ word.Translations[0].Word }}</td>
-                        <td><button class="small button alert btn-deleteWord">Delete</button></td>
+                        <td><button @click="removeWord(word.id)" class="small button alert btn-deleteWord">{{ word.id }}</button></td>
                     </tr>
                     
                 </tbody>

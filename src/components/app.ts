@@ -10,6 +10,17 @@ var vueWordList = new Vue({
     el: "#tbl-vuewordlist",
     data: {
         words: WordList
+    },
+    methods: {
+        removeWord: function (_wordid : string) {
+
+            for (var i = 0; i < this.words.length; i++) {
+                if (this.words[i].id == _wordid) {
+                    this.words.splice(i, 1);
+                }                
+            }
+     
+        }
     }
 });
 
@@ -30,7 +41,7 @@ window.onload = function() {
                 
                 WordList = convertFromTxt(reader.result);
                 // writing words to a table with Vue                
-                Vue.set(vueWordList.$data, "words", WordList);
+                Vue.set(vueWordList.$data, "words", WordList);                
                 console.log(WordList);
                 
                 
@@ -44,6 +55,7 @@ window.onload = function() {
         }
     });
 }
+
 
 
 function convertFromTxt(wordFile:string) : Word[] {
