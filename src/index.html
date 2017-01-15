@@ -42,12 +42,30 @@
             </div>
             
         </div>        
-               
-        <div id="hellobello">
-            {{ message }}
-        </div>
 
-        <div class="row" id="tbl-wordList">
+        <div class="row" id="tbl-vuewordlist">
+            <table>
+                <thead>
+                    <tr>
+                        <th width="200">Word</th>
+                        <th width="200">Translation</th>
+                        <th width="100">Options</th>                        
+                    </tr>
+
+                </thead>
+                <tbody>
+                    <tr v-for="word in words">
+                        <td>{{ word.Word }}</td>
+                        <td>{{ word.Translations[0].Word }}</td>
+                        <td><button class="small button alert btn-deleteWord">Delete</button></td>
+                    </tr>
+                    
+                </tbody>
+            </table>            
+        </div>
+        
+
+        <!--<div class="row" id="tbl-wordList">
                
             
             <table>
@@ -63,7 +81,7 @@
                 </tbody>
             </table>            
             
-        </div>
+        </div>-->
 
 
         

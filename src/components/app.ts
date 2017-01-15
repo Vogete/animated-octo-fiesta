@@ -6,6 +6,14 @@ let WordList : Word[] = [];
 let wordSeparator : string = "  ";
 let lineSeparator : string = "\r\n";
 
+var vueWordList = new Vue({
+    el: "#tbl-vuewordlist",
+    data: {
+        words: WordList
+    }
+});
+
+
 // loading files
 window.onload = function() {
     let fileInput = <HTMLInputElement>document.getElementById('inp-wordList');
@@ -19,10 +27,13 @@ window.onload = function() {
             let reader = new FileReader();
 
             reader.onload = function(e) {
-                // fileDisplayArea.innerText = reader.result;
-                WordList = convertFromTxt(reader.result);
                 
-                writeWordsInTable(WordList);
+                WordList = convertFromTxt(reader.result);
+                // writing words to a table with Vue                
+                Vue.set(vueWordList.$data, "words", WordList);
+                console.log(WordList);
+                
+                
             }
 
             reader.readAsText(file);            
@@ -83,10 +94,11 @@ function addNewWordFromInput() {
         let _newWord = createWord(_word, [_translation]);    
         WordList.push(_newWord);
 
-        addWordToTable(_newWord);
+        // addWordToTable(_newWord);
         console.log(WordList);
         _inputWord.value = "";
-        _inputTranslation.value="";        
+        _inputTranslation.value="";
+        
     }
 
 }
@@ -110,12 +122,7 @@ function deleteWord(_word:Word) {
 
 }
 
-var app = new Vue({
-    el: "#hellobello",
-    data: {
-        message: "kukucs"
-    }
-});
+
 
 document.getElementById("btn-addWord").addEventListener("click", addNewWordFromInput, false);
 

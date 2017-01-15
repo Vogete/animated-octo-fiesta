@@ -12,7 +12,7 @@ module.exports = function(gulp){
 	gulp.task('browserify', function() {
 
 		return browserify(config.src.ts, {debug: true})// "debug: true" will enable typscript source maps!! :)
-            .add(config.libs.types)
+            // .add(config.libs.types)
 			.plugin(tsify, { noImplicitAny: true })
 			.transform('brfs')
 			.bundle()

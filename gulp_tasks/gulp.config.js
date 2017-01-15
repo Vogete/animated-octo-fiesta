@@ -12,7 +12,7 @@ module.exports = {
         ],
         js: [
             // Order matters
-            globalPath.npm+"vue/dist/vue.js",
+            // globalPath.npm+"vue/dist/vue.js",
 
             globalPath.src + "libs/jquery.min.js",
             globalPath.src + "libs/what-input.min.js",
