@@ -32,36 +32,56 @@
             <input type="file" id="inp-wordList" class="" />
 
             <div class="medium-5 columns">
-                <input type="text" placeholder="Write a word here">                
+                <input id="txt-newWord" type="text" placeholder="Write a word here">                
             </div>
             <div class="medium-5 columns">
-                <input type="text" placeholder="Write a translation">                
+                <input id="txt-newTranslation" type="text" placeholder="Write a translation">                
             </div>
             <div class="medium-2 columns">
-                <button class="small button success">Add word</button>
+                <button id="btn-addWord" class="small button success">Add word</button>
             </div>
             
         </div>        
-               
-        <div class="row" id="tbl-wordList">
+
+        <div class="row" id="tbl-vuewordlist">
+            <table>
+                <thead>
+                    <tr>
+                        <th width="200">Word</th>
+                        <th width="200">Translation</th>
+                        <th width="100">Options</th>                        
+                    </tr>
+
+                </thead>
+                <tbody>
+                    <tr v-for="word in words" :key="word.id">
+                        <td>{{ word.Word }}</td>
+                        <td>{{ word.Translations[0].Word }}</td>
+                        <td><button @click="removeWord(word.id)" class="small button alert btn-deleteWord">{{ word.id }}</button></td>
+                    </tr>
+                    
+                </tbody>
+            </table>            
+        </div>
+        
+
+        <!--<div class="row" id="tbl-wordList">
                
             
             <table>
                 <thead>
                     <tr>
-                        <th width="400">Word</th>
-                        <th width="400">Translation</th>
-                        <th width="200">Options</th>
+                        <th width="200">Word</th>
+                        <th width="200">Translation</th>
+                        <th width="100">Options</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
 
-                    </tr>
                 </tbody>
             </table>            
             
-        </div>
+        </div>-->
 
 
         
