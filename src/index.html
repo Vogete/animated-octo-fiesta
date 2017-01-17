@@ -27,63 +27,62 @@
 
         <h1>Animated Octo fiesta</h1>
 
-
-        <div class="row">
-            <input type="file" id="inp-wordList" class="" />
-
-            <div class="medium-5 columns">
-                <input id="txt-newWord" type="text" placeholder="Write a word here">                
-            </div>
-            <div class="medium-5 columns">
-                <input id="txt-newTranslation" type="text" placeholder="Write a translation">                
-            </div>
-            <div class="medium-2 columns">
-                <button id="btn-addWord" class="small button success">Add word</button>
-            </div>
+        <div id="app">
             
-        </div>        
+            <div class="row">
+                <input type="file" id="inp-wordList" class="" />
 
-        <div class="row" id="tbl-vuewordlist">
-            <table>
-                <thead>
-                    <tr>
-                        <th width="200">Word</th>
-                        <th width="200">Translation</th>
-                        <th width="100">Options</th>                        
-                    </tr>
+                <div class="medium-4 columns">
+                    <input id="txt-newWord" type="text" placeholder="Write a word here">                
+                </div>
+                <div class="medium-4 columns">
+                    <input id="txt-newTranslation" type="text" placeholder="Write a translation">                
+                </div>
+                <div class="medium-4 columns">
+                    <button id="btn-addWord" class="small button success">Add word</button>
+                    <button id="btn-addWord" onclick="document.getElementById('inp-wordList').click()" class="small button default">Open File</button>
+                </div>
+                
+            </div>
 
-                </thead>
-                <tbody>
-                    <tr v-for="word in words" :key="word.id">
-                        <td>{{ word.Word }}</td>
-                        <td>{{ word.Translations[0].Word }}</td>
-                        <td><button @click="removeWord(word.id)" class="small button alert btn-deleteWord">{{ word.id }}</button></td>
-                    </tr>
-                    
-                </tbody>
-            </table>            
+            <template v-if="words.length > 0">
+
+                <div class="row">
+                    <div class="medium-12 columns">
+                        <button id="btn-Learn" class="button success btn-fullWidth">Start Learning</button>
+                    </div>            
+                </div>
+                
+                <div class="row" id="tbl-vuewordlist">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th width="200">Word</th>
+                                <th width="200">Translation</th>
+                                <th width="100">Options</th>                        
+                            </tr>
+
+                        </thead>
+                        <tbody>
+                            <tr v-for="word in words" :key="word.id">
+                                <td>{{ word.Word }}</td>
+                                <td>{{ word.Translations[0].Word }}</td>
+                                <td><button @click="removeWord(word.id)" class="small button alert btn-deleteWord">Delete</button></td>                                
+                            </tr>
+                            
+                        </tbody>
+                    </table>            
+                </div>
+
+                <div class="row">
+                    <div class="medium-12 columns">
+                        <button id="btn-removeAllWords" @click="removeAllWords()" class="button alert btn-fullWidth">Remove all words</button>
+                    </div>            
+                </div>                
+
+            </template>
+
         </div>
-        
-
-        <!--<div class="row" id="tbl-wordList">
-               
-            
-            <table>
-                <thead>
-                    <tr>
-                        <th width="200">Word</th>
-                        <th width="200">Translation</th>
-                        <th width="100">Options</th>
-                    </tr>
-                </thead>
-                <tbody>
-
-                </tbody>
-            </table>            
-            
-        </div>-->
-
-
         
         <script src="js/libs.js"></script>
 

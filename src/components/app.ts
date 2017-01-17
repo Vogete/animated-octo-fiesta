@@ -7,20 +7,26 @@ let wordSeparator : string = "  ";
 let lineSeparator : string = "\r\n";
 
 var vueWordList = new Vue({
-    el: "#tbl-vuewordlist",
+    // el: "#tbl-vuewordlist",
+    el: "#app",
     data: {
-        words: WordList
+        words: WordList,
+        isLearning: false
     },
     methods: {
         removeWord: function (_wordid : string) {
-
+            
             for (var i = 0; i < this.words.length; i++) {
                 if (this.words[i].id == _wordid) {
                     this.words.splice(i, 1);
                 }                
             }
      
+        },
+        removeAllWords: function () {            
+            this.words.splice(0, this.words.length);
         }
+
     }
 });
 
@@ -43,7 +49,7 @@ window.onload = function() {
                 // writing words to a table with Vue                
                 Vue.set(vueWordList.$data, "words", WordList);                
                 console.log(WordList);
-                
+                fileInput.value = "";                
                 
             }
 
@@ -55,7 +61,6 @@ window.onload = function() {
         }
     });
 }
-
 
 
 function convertFromTxt(wordFile:string) : Word[] {
