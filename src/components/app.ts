@@ -6,57 +6,117 @@ let WordList : Word[] = [];
 let wordSeparator : string = "  ";
 let lineSeparator : string = "\r\n";
 
+let remainingWords: Word[] = [];
+let completedWords: Word[] = [];
+
 var vueWordList = new Vue({
-    el: "#tbl-vuewordlist",
+    // el: "#tbl-vuewordlist",
+    el: "#app",
     data: {
-        words: WordList
+        file: null,
+        words: WordList,
+        isLearning: false,
+        learning: {
+            remainingWords: remainingWords,
+            completedWords: completedWords            
+        }
     },
     methods: {
-        removeWord: function (_wordid : string) {
-
-            for (var i = 0; i < this.words.length; i++) {
+        loadFile: function (e) {
+            floadFile(e.target);
+        },
+        removeWord: function (_wordid : string) {            
+            for (let i = 0; i < this.words.length; i++) {
                 if (this.words[i].id == _wordid) {
                     this.words.splice(i, 1);
-                }                
+                }
             }
-     
+        },
+        removeAllWords: function () {            
+            this.words.splice(0, this.words.length);
+        },
+        learn: function () {
+            this.isLearning = true;
+
+            // yes. this is supposed to be this way. don't question it.            
+            for (let i = 0; i < this.words.length; i++) {
+                this.learning.remainingWords.push(this.words[i]);
+                
+            }
+
+            shuffleWords(this.learning.remainingWords);
+            
+        },
+        stopLearn: function () {
+            this.isLearning = false;
+            this.learning.remainingWords.splice(0, this.learning.remainingWords.length);
+            this.learning.completedWords.splice(0, this.learning.completedWords.length);                
         }
+
     }
 });
 
 
-// loading files
-window.onload = function() {
-    let fileInput = <HTMLInputElement>document.getElementById('inp-wordList');
-    let fileDisplayArea = document.getElementById('fileDisplayArea');
+// // loading files
+// window.onload = function() {
+//     let fileInput = <HTMLInputElement>document.getElementById('inp-wordList');
+//     let fileDisplayArea = document.getElementById('fileDisplayArea');
 
-    fileInput.addEventListener('change', function(e) {
-        let file = fileInput.files[0];
-        let textType = /text.*/;
+//     fileInput.addEventListener('change', function(e) {
+//         let file = fileInput.files[0];
+//         let textType = /text.*/;
 
-        if (file.type.match(textType)) {
-            let reader = new FileReader();
+//         if (file.type.match(textType)) {
+//             let reader = new FileReader();
 
-            reader.onload = function(e) {
+//             reader.onload = function(e) {
                 
-                WordList = convertFromTxt(reader.result);
-                // writing words to a table with Vue                
-                Vue.set(vueWordList.$data, "words", WordList);                
-                console.log(WordList);
+//                 WordList = convertFromTxt(reader.result);
+//                 // writing words to a table with Vue                
+//                 Vue.set(vueWordList.$data, "words", WordList);                
+//                 console.log(WordList);
+//                 fileInput.value = "";                
                 
-                
-            }
+//             }
 
-            reader.readAsText(file);            
-        } else {
-            // fileDisplayArea.innerText = "File not supported!";
-            console.log("Error, file not supported");
+//             reader.readAsText(file);            
+//         } else {
+//             // fileDisplayArea.innerText = "File not supported!";
+//             console.log("Error, file not supported");
+            
+//         }
+//     });
+// }
+
+
+function floadFile(fileInput) {
+
+    let file = fileInput.files[0];
+    let textType = /text.*/;
+
+    if (file.type.match(textType)) {
+        let reader = new FileReader();
+
+        reader.onload = function(e) {
+            
+            WordList = convertFromTxt(reader.result);
+            // writing words to a table with Vue                
+            Vue.set(vueWordList.$data, "words", WordList);                
+            
+            console.log(WordList);
+            fileInput.value = "";                
             
         }
-    });
+
+        reader.readAsText(file);            
+    } else {
+        // fileDisplayArea.innerText = "File not supported!";
+        console.log("Error, file not supported");
+        
+    }
+
+        
 }
-
-
 
 function convertFromTxt(wordFile:string) : Word[] {
 
@@ -134,7 +194,18 @@ function deleteWord(_word:Word) {
 
 }
 
+function shuffleWords(array : Word[]){   
+    var i = 0
+    , j = 0
+    , temp = null
 
+    for (i = array.length - 1; i > 0; i -= 1) {
+        j = Math.floor(Math.random() * (i + 1))
+        temp = array[i]
+        array[i] = array[j]
+        array[j] = temp
+    }    
+}
 
 document.getElementById("btn-addWord").addEventListener("click", addNewWordFromInput, false);
 

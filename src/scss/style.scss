@@ -1,7 +1,12 @@
 $menu-color: #00897B;
 $primary-color: #009688;
 $dark-font-color: #FAFAFA;
+$background-color: #FAFAFA;
 $light-font-color: #000000;
+
+body{
+    background-color: $background-color;
+}
 
 .top-bar{
     box-shadow: 0 2px 5px rgba(0,0,0,.26);    
@@ -24,4 +29,29 @@ h1{
 
 td .button{
     margin-bottom: 0;
+}
+
+#inp-wordList{
+    display: none;
+}
+
+.btn-fullWidth{
+    width: 100%;
+}
+
+
+.form-learning{
+    max-width: 30em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10%;
+    background-color: white;
+    padding: 2em;
+    box-shadow: 0 2px 5px rgba(0,0,0,.26);
+    border-radius: 4px
+}
+.form-learning button{
+    width: 100%;
+    box-shadow: 0 2px 5px rgba(0,0,0,.26);
 }
