@@ -27,29 +27,34 @@
 
         <h1>Animated Octo fiesta</h1>
 
-        <div id="app">
-            
-            <div class="row">
-                <input type="file" id="inp-wordList" class="" />
 
-                <div class="medium-4 columns">
-                    <input id="txt-newWord" type="text" placeholder="Write a word here">                
+        <div id="app">        
+            <template v-if="isLearning!=true">    
+                <div class="row">
+                    <p>Open a file with words in it, or start adding some words and translations</p>
                 </div>
-                <div class="medium-4 columns">
-                    <input id="txt-newTranslation" type="text" placeholder="Write a translation">                
-                </div>
-                <div class="medium-4 columns">
-                    <button id="btn-addWord" class="small button success">Add word</button>
-                    <button id="btn-addWord" onclick="document.getElementById('inp-wordList').click()" class="small button default">Open File</button>
-                </div>
-                
-            </div>
+                <div class="row">
+                    <input type="file" id="inp-wordList" class="" />
 
-            <template v-if="words.length > 0">
+                    <div class="medium-4 columns">
+                        <input id="txt-newWord" type="text" placeholder="Write a word here">
+                    </div>
+                    <div class="medium-4 columns">
+                        <input id="txt-newTranslation" type="text" placeholder="Write a translation">                
+                    </div>
+                    <div class="medium-4 columns">
+                        <button id="btn-addWord" class="small button success">Add word</button>
+                        <button id="btn-addWord" onclick="document.getElementById('inp-wordList').click()" class="small button default">Open File</button>
+                    </div>
+                    
+                </div>
+            </template>
+
+            <template v-if="words.length > 0 && isLearning!=true">
 
                 <div class="row">
                     <div class="medium-12 columns">
-                        <button id="btn-Learn" class="button success btn-fullWidth">Start Learning</button>
+                        <button id="btn-Learn" @click="learn()" class="button success btn-fullWidth">Start Learning</button>
                     </div>            
                 </div>
                 
@@ -78,9 +83,21 @@
                     <div class="medium-12 columns">
                         <button id="btn-removeAllWords" @click="removeAllWords()" class="button alert btn-fullWidth">Remove all words</button>
                     </div>            
-                </div>                
+                </div>
 
             </template>
+
+            <div class="row form-learning" v-else-if="isLearning">
+                <h3>{{ learning.remainingWords[0].Word }}</h3>
+                <input type="text" placeholder="Write the translation here">
+                <div class="medium-6 columns">
+                    <button class="button alert" @click="stopLearn()">Quit Learning</button>                    
+                </div>
+                <div class="medium-6 columns">
+                    <button class="button">OK</button>
+                </div>
+            </div>
+
 
         </div>
         
