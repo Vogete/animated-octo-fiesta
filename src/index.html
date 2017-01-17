@@ -34,7 +34,8 @@
                     <p>Open a file with words in it, or start adding some words and translations</p>
                 </div>
                 <div class="row">
-                    <input type="file" id="inp-wordList" class="" />
+                    <input type="file" id="inp-wordList" class="" v-on:change="loadFile" />
+                    <p>{{ file }}</p>
 
                     <div class="medium-4 columns">
                         <input id="txt-newWord" type="text" placeholder="Write a word here">

@@ -13,6 +13,7 @@ var vueWordList = new Vue({
     // el: "#tbl-vuewordlist",
     el: "#app",
     data: {
+        file: null,
         words: WordList,
         isLearning: false,
         learning: {
@@ -21,6 +22,9 @@ var vueWordList = new Vue({
         }
     },
     methods: {
+        loadFile: function (e) {
+            floadFile(e.target);
+        },
         removeWord: function (_wordid : string) {            
             for (let i = 0; i < this.words.length; i++) {
                 if (this.words[i].id == _wordid) {
@@ -53,37 +57,66 @@ var vueWordList = new Vue({
 });
 
 
-// loading files
-window.onload = function() {
-    let fileInput = <HTMLInputElement>document.getElementById('inp-wordList');
-    let fileDisplayArea = document.getElementById('fileDisplayArea');
+// // loading files
+// window.onload = function() {
+//     let fileInput = <HTMLInputElement>document.getElementById('inp-wordList');
+//     let fileDisplayArea = document.getElementById('fileDisplayArea');
 
-    fileInput.addEventListener('change', function(e) {
-        let file = fileInput.files[0];
-        let textType = /text.*/;
+//     fileInput.addEventListener('change', function(e) {
+//         let file = fileInput.files[0];
+//         let textType = /text.*/;
 
-        if (file.type.match(textType)) {
-            let reader = new FileReader();
+//         if (file.type.match(textType)) {
+//             let reader = new FileReader();
 
-            reader.onload = function(e) {
+//             reader.onload = function(e) {
                 
-                WordList = convertFromTxt(reader.result);
-                // writing words to a table with Vue                
-                Vue.set(vueWordList.$data, "words", WordList);                
-                console.log(WordList);
-                fileInput.value = "";                
+//                 WordList = convertFromTxt(reader.result);
+//                 // writing words to a table with Vue                
+//                 Vue.set(vueWordList.$data, "words", WordList);                
+//                 console.log(WordList);
+//                 fileInput.value = "";                
                 
-            }
+//             }
 
-            reader.readAsText(file);            
-        } else {
-            // fileDisplayArea.innerText = "File not supported!";
-            console.log("Error, file not supported");
+//             reader.readAsText(file);            
+//         } else {
+//             // fileDisplayArea.innerText = "File not supported!";
+//             console.log("Error, file not supported");
+            
+//         }
+//     });
+// }
+
+
+function floadFile(fileInput) {
+
+    let file = fileInput.files[0];
+    let textType = /text.*/;
+
+    if (file.type.match(textType)) {
+        let reader = new FileReader();
+
+        reader.onload = function(e) {
+            
+            WordList = convertFromTxt(reader.result);
+            // writing words to a table with Vue                
+            Vue.set(vueWordList.$data, "words", WordList);                
+            
+            console.log(WordList);
+            fileInput.value = "";                
             
         }
-    });
-}
 
+        reader.readAsText(file);            
+    } else {
+        // fileDisplayArea.innerText = "File not supported!";
+        console.log("Error, file not supported");
+        
+    }
+
+        
+}
 
 function convertFromTxt(wordFile:string) : Word[] {
 
