@@ -18,12 +18,18 @@ var vueWordList = new Vue({
         isLearning: false,
         learning: {
             remainingWords: remainingWords,
-            completedWords: completedWords            
+            completedWords: completedWords,
+            type: "word",
+            correctWord: null,
+            finishedLearning: false
         }
     },
     methods: {
-        loadFile: function (e) {
-            floadFile(e.target);
+        loadFile: function (e : any) {
+            fLoadFile(e.target);
+        },
+        addWordFromInput: function () {
+            addNewWordFromInput();
         },
         removeWord: function (_wordid : string) {            
             for (let i = 0; i < this.words.length; i++) {
@@ -35,7 +41,8 @@ var vueWordList = new Vue({
         removeAllWords: function () {            
             this.words.splice(0, this.words.length);
         },
-        learn: function () {
+        learn: function (_type : string) {
+            this.learning.type = _type;
             this.isLearning = true;
 
             // yes. this is supposed to be this way. don't question it.            
@@ -43,9 +50,42 @@ var vueWordList = new Vue({
                 this.learning.remainingWords.push(this.words[i]);
                 
             }
-
             shuffleWords(this.learning.remainingWords);
             
+        },
+        evaluateAnswer: function () {            
+            if (!this.learning.finishedLearning) {                
+                if (this.learning.correctWord == null) {
+                    if (evaluate(this.learning.type, this.learning.remainingWords[0])) {
+                        this.learning.correctWord = true;
+                    } else {
+                        this.learning.correctWord = false;
+                    }
+
+                } else if (this.learning.correctWord) {
+                    if (this.learning.remainingWords.length > 1) {
+                        this.learning.remainingWords.splice(0, 1);
+                        this.learning.completedWords.push(this.learning.remainingWords[0]);
+                        (<HTMLInputElement>document.getElementById("txt-typedWord")).value = "";
+                        this.learning.correctWord = null;
+                        
+                    } else{
+                        this.learning.finishedLearning = true;
+                        console.log(this.learning.finishedLearning);                        
+                    }
+
+                } else if (this.learning.correctWord == false) {
+                    this.learning.remainingWords.push(this.learning.remainingWords[0]);
+                    this.learning.remainingWords.splice(0, 1);
+                    (<HTMLInputElement>document.getElementById("txt-typedWord")).value = "";
+                    this.learning.correctWord = null;       
+                }
+            } else {
+                this.stopLearn();
+                this.learning.finishedLearning = false;
+                this.learning.correctWord = null;
+            }
+
         },
         stopLearn: function () {
             this.isLearning = false;
@@ -57,39 +97,7 @@ var vueWordList = new Vue({
 });
 
 
-// // loading files
-// window.onload = function() {
-//     let fileInput = <HTMLInputElement>document.getElementById('inp-wordList');
-//     let fileDisplayArea = document.getElementById('fileDisplayArea');
-
-//     fileInput.addEventListener('change', function(e) {
-//         let file = fileInput.files[0];
-//         let textType = /text.*/;
-
-//         if (file.type.match(textType)) {
-//             let reader = new FileReader();
-
-//             reader.onload = function(e) {
-                
-//                 WordList = convertFromTxt(reader.result);
-//                 // writing words to a table with Vue                
-//                 Vue.set(vueWordList.$data, "words", WordList);                
-//                 console.log(WordList);
-//                 fileInput.value = "";                
-                
-//             }
-
-//             reader.readAsText(file);            
-//         } else {
-//             // fileDisplayArea.innerText = "File not supported!";
-//             console.log("Error, file not supported");
-            
-//         }
-//     });
-// }
-
-
-function floadFile(fileInput) {
+function fLoadFile(fileInput : any) {
 
     let file = fileInput.files[0];
     let textType = /text.*/;
@@ -207,6 +215,19 @@ function shuffleWords(array : Word[]){
     }    
 }
 
-document.getElementById("btn-addWord").addEventListener("click", addNewWordFromInput, false);
+function evaluate(_type: string, _currentWord : Word) : Boolean {
+    let _typedWord = (<HTMLInputElement>document.getElementById("txt-typedWord")).value
 
+    if (_type === "word") {
+        if (_currentWord.Translations[0].Word === _typedWord) {
+            return true;
+        }        
 
+    } else if (_type === "translation") {
+        if (_currentWord.Word === _typedWord) {
+            return true;
+        }
+    }
+  
+    return false;
+}

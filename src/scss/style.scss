@@ -3,11 +3,16 @@ $primary-color: #009688;
 $dark-font-color: #FAFAFA;
 $background-color: #FAFAFA;
 $light-font-color: #000000;
+$wrong: #F44336;
+$correct: #4CAF50;
 
 body{
     background-color: $background-color;
 }
 
+#app{
+    height: 100%;
+}
 .top-bar{
     box-shadow: 0 2px 5px rgba(0,0,0,.26);    
     font-size: 1.2em;
@@ -44,14 +49,23 @@ td .button{
     max-width: 30em;
     display: flex;
     align-items: center;
-    justify-content: center;
-    margin-top: 10%;
+    justify-content: center;    
     background-color: white;
     padding: 2em;
     box-shadow: 0 2px 5px rgba(0,0,0,.26);
-    border-radius: 4px
+    border-radius: 4px;
+    margin-top: 5em;
 }
 .form-learning button{
     width: 100%;
-    box-shadow: 0 2px 5px rgba(0,0,0,.26);
+    box-shadow: 0 2px 5px rgba(0,0,0,.26);    
+}
+
+
+.lbl-wrong-answer{
+    color: $wrong;
+}
+
+.lbl-correct-answer{
+    color: $correct;
 }

@@ -2,7 +2,7 @@
 <html lang="en">
 
     <head>
-        <title>Project Animated Octofiesta</title>
+        <title>Word Learning</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="css/libs.css">
@@ -15,7 +15,7 @@
         <div class="top-bar">
             <div class="top-bar-left">
                 <ul class="dropdown menu" data-dropdown-menu>
-                    <li class="menu-text">Animated Octo fiesta</li>
+                    <li class="menu-text">Word Learning/li>
                 </ul>
             </div>
             <div class="top-bar-right">
@@ -25,13 +25,14 @@
             </div>
         </div>
 
-        <h1>Animated Octo fiesta</h1>
+        <h1>Word Learning</h1>
 
 
         <div id="app">        
             <template v-if="isLearning!=true">    
                 <div class="row">
-                    <p>Open a file with words in it, or start adding some words and translations</p>
+                    <p>Open a file with words in it, or start adding some words and translations.</p>
+                    <p>Files (txt) are supposed to contain a word, and its translation separated by 2 spaces. For now, at least.</p>
                 </div>
                 <div class="row">
                     <input type="file" id="inp-wordList" class="" v-on:change="loadFile" />
@@ -44,7 +45,7 @@
                         <input id="txt-newTranslation" type="text" placeholder="Write a translation">                
                     </div>
                     <div class="medium-4 columns">
-                        <button id="btn-addWord" class="small button success">Add word</button>
+                        <button id="btn-addWord" @click="addWordFromInput()" class="small button success">Add word</button>
                         <button id="btn-addWord" onclick="document.getElementById('inp-wordList').click()" class="small button default">Open File</button>
                     </div>
                     
@@ -54,8 +55,11 @@
             <template v-if="words.length > 0 && isLearning!=true">
 
                 <div class="row">
-                    <div class="medium-12 columns">
-                        <button id="btn-Learn" @click="learn()" class="button success btn-fullWidth">Start Learning</button>
+                    <div class="medium-6 columns">
+                        <button id="btn-Learn" @click="learn('word')" class="button btn-fullWidth">Start practicing: Word is given</button>
+                    </div>            
+                    <div class="medium-6 columns">
+                        <button id="btn-Learn" @click="learn('translation')" class="button btn-fullWidth">Start practicing: Translation is given</button>
                     </div>            
                 </div>
                 
@@ -88,16 +92,29 @@
 
             </template>
 
-            <div class="row form-learning" v-else-if="isLearning">
-                <h3>{{ learning.remainingWords[0].Word }}</h3>
-                <input type="text" placeholder="Write the translation here">
+            
+            <div class="row form-learning" v-if="isLearning && !learning.finishedLearning">
+                <h3 v-if="learning.type == 'word' ">{{ learning.remainingWords[0].Word }}</h3>
+                <h3 v-if="learning.type == 'translation' ">{{ learning.remainingWords[0].Translations[0].Word }}</h3>
+                <input id="txt-typedWord" type="text" placeholder="Write the translation here" v-on:keyup.enter="evaluateAnswer()">
                 <div class="medium-6 columns">
                     <button class="button alert" @click="stopLearn()">Quit Learning</button>                    
                 </div>
                 <div class="medium-6 columns">
-                    <button class="button">OK</button>
+                    <button class="button" @click="evaluateAnswer()">Submit answer</button>
                 </div>
+                <h3 class="lbl-correct-answer" v-if="learning.correctWord">Correct Answer!</h3>
+                <h3 class="lbl-wrong-answer" v-else-if="learning.correctWord == false && learning.type == 'word' ">{{ learning.remainingWords[0].Translations[0].Word }}</h3>
+                <h3 class="lbl-wrong-answer" v-else-if="learning.correctWord == false && learning.type == 'translation' ">{{ learning.remainingWords[0].Word }}</h3>
             </div>
+        
+            <div class="row form-learning" v-if="learning.finishedLearning">
+                <h3>You have finished learning!</h3>
+                <div class="medium-12 columns">
+                    <button class="button" @click="evaluateAnswer()">Go back</button>
+                </div>                
+            </div>
+            
 
 
         </div>
