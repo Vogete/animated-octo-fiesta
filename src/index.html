@@ -2,7 +2,7 @@
 <html lang="en">
 
     <head>
-        <title>Project Animated Octofiesta</title>
+        <title>Word Learning</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="css/libs.css">
@@ -15,7 +15,7 @@
         <div class="top-bar">
             <div class="top-bar-left">
                 <ul class="dropdown menu" data-dropdown-menu>
-                    <li class="menu-text">Animated Octo fiesta</li>
+                    <li class="menu-text">Word Learning/li>
                 </ul>
             </div>
             <div class="top-bar-right">
@@ -25,7 +25,7 @@
             </div>
         </div>
 
-        <h1>Animated Octo fiesta</h1>
+        <h1>Word Learning</h1>
 
 
         <div id="app">        
@@ -92,7 +92,8 @@
 
             </template>
 
-            <div class="row form-learning" v-else-if="isLearning">
+            
+            <div class="row form-learning" v-if="isLearning && !learning.finishedLearning">
                 <h3 v-if="learning.type == 'word' ">{{ learning.remainingWords[0].Word }}</h3>
                 <h3 v-if="learning.type == 'translation' ">{{ learning.remainingWords[0].Translations[0].Word }}</h3>
                 <input id="txt-typedWord" type="text" placeholder="Write the translation here" v-on:keyup.enter="evaluateAnswer()">
@@ -106,6 +107,14 @@
                 <h3 class="lbl-wrong-answer" v-else-if="learning.correctWord == false && learning.type == 'word' ">{{ learning.remainingWords[0].Translations[0].Word }}</h3>
                 <h3 class="lbl-wrong-answer" v-else-if="learning.correctWord == false && learning.type == 'translation' ">{{ learning.remainingWords[0].Word }}</h3>
             </div>
+        
+            <div class="row form-learning" v-if="learning.finishedLearning">
+                <h3>You have finished learning!</h3>
+                <div class="medium-12 columns">
+                    <button class="button" @click="evaluateAnswer()">Go back</button>
+                </div>                
+            </div>
+            
 
 
         </div>

@@ -20,11 +20,12 @@ var vueWordList = new Vue({
             remainingWords: remainingWords,
             completedWords: completedWords,
             type: "word",
-            correctWord: null
+            correctWord: null,
+            finishedLearning: false
         }
     },
     methods: {
-        loadFile: function (e) {
+        loadFile: function (e : any) {
             fLoadFile(e.target);
         },
         addWordFromInput: function () {
@@ -53,28 +54,37 @@ var vueWordList = new Vue({
             
         },
         evaluateAnswer: function () {            
-            if (this.learning.correctWord == null) {
-                if (evaluate(this.learning.type, this.learning.remainingWords[0])) {
-                    console.log("helyes");
-                    this.learning.correctWord = true;
-                } else {
-                    console.log("not helyes");
-                    this.learning.correctWord = false;
+            if (!this.learning.finishedLearning) {                
+                if (this.learning.correctWord == null) {
+                    if (evaluate(this.learning.type, this.learning.remainingWords[0])) {
+                        this.learning.correctWord = true;
+                    } else {
+                        this.learning.correctWord = false;
+                    }
+
+                } else if (this.learning.correctWord) {
+                    if (this.learning.remainingWords.length > 1) {
+                        this.learning.remainingWords.splice(0, 1);
+                        this.learning.completedWords.push(this.learning.remainingWords[0]);
+                        (<HTMLInputElement>document.getElementById("txt-typedWord")).value = "";
+                        this.learning.correctWord = null;
+                        
+                    } else{
+                        this.learning.finishedLearning = true;
+                        console.log(this.learning.finishedLearning);                        
+                    }
+
+                } else if (this.learning.correctWord == false) {
+                    this.learning.remainingWords.push(this.learning.remainingWords[0]);
+                    this.learning.remainingWords.splice(0, 1);
+                    (<HTMLInputElement>document.getElementById("txt-typedWord")).value = "";
+                    this.learning.correctWord = null;       
                 }
-
-            } else if (this.learning.correctWord) {
-                this.learning.completedWords.push(this.learning.remainingWords[0]);
-                this.learning.remainingWords.splice(0, 1);
-                (<HTMLInputElement>document.getElementById("txt-typedWord")).value = "";
+            } else {
+                this.stopLearn();
+                this.learning.finishedLearning = false;
                 this.learning.correctWord = null;
-
-            } else if (this.learning.correctWord == false) {
-                this.learning.remainingWords.push(this.learning.remainingWords[0]);
-                this.learning.remainingWords.splice(0, 1);
-                (<HTMLInputElement>document.getElementById("txt-typedWord")).value = "";
-                this.learning.correctWord = null;       
             }
-
 
         },
         stopLearn: function () {
@@ -87,7 +97,7 @@ var vueWordList = new Vue({
 });
 
 
-function fLoadFile(fileInput) {
+function fLoadFile(fileInput : any) {
 
     let file = fileInput.files[0];
     let textType = /text.*/;
