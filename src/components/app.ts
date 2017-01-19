@@ -70,8 +70,7 @@ var vueWordList = new Vue({
                         this.learning.correctWord = null;
                         
                     } else{
-                        this.learning.finishedLearning = true;
-                        console.log(this.learning.finishedLearning);                        
+                        this.learning.finishedLearning = true;                        
                     }
 
                 } else if (this.learning.correctWord == false) {
@@ -111,7 +110,7 @@ function fLoadFile(fileInput : any) {
             // writing words to a table with Vue                
             Vue.set(vueWordList.$data, "words", WordList);                
             
-            console.log(WordList);
+            // console.log(WordList);
             fileInput.value = "";                
             
         }
@@ -119,7 +118,7 @@ function fLoadFile(fileInput : any) {
         reader.readAsText(file);            
     } else {
         // fileDisplayArea.innerText = "File not supported!";
-        console.log("Error, file not supported");
+        // console.log("Error, file not supported");
         
     }
 
@@ -143,7 +142,7 @@ function convertFromTxt(wordFile:string) : Word[] {
 }
 
 function writeWordsInTable(words: Word[]) {
-    console.log(words);
+    // console.log(words);
     let appendHTML : string = "";
     let tblWordlist =  <HTMLTableSectionElement>document.getElementById("tbl-wordList").getElementsByTagName("tbody")[0];
 
@@ -175,7 +174,7 @@ function addNewWordFromInput() {
         WordList.push(_newWord);
 
         // addWordToTable(_newWord);
-        console.log(WordList);
+        // console.log(WordList);
         _inputWord.value = "";
         _inputTranslation.value="";
         

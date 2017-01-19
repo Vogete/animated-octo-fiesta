@@ -15,7 +15,7 @@
         <div class="top-bar">
             <div class="top-bar-left">
                 <ul class="dropdown menu" data-dropdown-menu>
-                    <li class="menu-text">Word Learning/li>
+                    <li class="menu-text">Word Learning</li>
                 </ul>
             </div>
             <div class="top-bar-right">
@@ -27,12 +27,12 @@
 
         <h1>Word Learning</h1>
 
-
         <div id="app">        
             <template v-if="isLearning!=true">    
                 <div class="row">
                     <p>Open a file with words in it, or start adding some words and translations.</p>
                     <p>Files (txt) are supposed to contain a word, and its translation separated by 2 spaces. For now, at least.</p>
+                    <p>For more information, please visit the <a href="https://github.com/Vogete/animated-octo-fiesta">GitHub repository</a></p>
                 </div>
                 <div class="row">
                     <input type="file" id="inp-wordList" class="" v-on:change="loadFile" />
@@ -114,8 +114,6 @@
                     <button class="button" @click="evaluateAnswer()">Go back</button>
                 </div>                
             </div>
-            
-
 
         </div>
         
